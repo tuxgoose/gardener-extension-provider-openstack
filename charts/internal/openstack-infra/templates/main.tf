@@ -24,6 +24,13 @@ resource "openstack_networking_router_v2" "router" {
 }
 {{- end}}
 
+{{ if .Values.create.network -}}
+resource "openstack_networking_network_v2" "network" {
+  name           = "{{ required "clusterName is required" .Values.clusterName }} "
+  admin_state_up = "true"
+}
+{{- end}}
+
 resource "openstack_networking_network_v2" "cluster" {
   name           = "{{ required "clusterName is required" .Values.clusterName }}"
   admin_state_up = "true"
